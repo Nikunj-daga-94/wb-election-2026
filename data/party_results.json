@@ -1,0 +1,380 @@
+{
+  "metadata": {
+    "state": "West Bengal",
+    "year": 2026,
+    "total_seats": 294,
+    "majority_mark": 148,
+    "counting_date": "2026-05-04",
+    "statewide_turnout": 92.93,
+    "total_electorate": 68251008,
+    "phase_1": {
+      "date": "2026-04-23",
+      "seats": 152,
+      "turnout_pct": 93.19
+    },
+    "phase_2": {
+      "date": "2026-04-29",
+      "seats": 142,
+      "turnout_pct": 92.67
+    },
+    "falta_repoll": {
+      "ac_no": 144,
+      "ac_name": "Falta",
+      "repoll_date": "2026-05-21",
+      "result_date": "2026-05-24",
+      "reason": "EVM tampering allegations",
+      "result_final": false
+    },
+    "data_sources": [
+      "ECI",
+      "MyNeta/ADR",
+      "Lok Dhaba/TCPD",
+      "WB CEO"
+    ],
+    "note": "AC #144 (Falta) result pending. Seat totals shown exclude Falta."
+  },
+  "results": {
+    "2011": [
+      {
+        "party": "AITC",
+        "seats": 184,
+        "vote_share_pct": 38.93
+      },
+      {
+        "party": "INC",
+        "seats": 42,
+        "vote_share_pct": 9.1
+      },
+      {
+        "party": "CPI(M)",
+        "seats": 40,
+        "vote_share_pct": 30.08
+      },
+      {
+        "party": "BJP",
+        "seats": 4,
+        "vote_share_pct": 4.06
+      },
+      {
+        "party": "OTH",
+        "seats": 24,
+        "vote_share_pct": 17.83
+      }
+    ],
+    "2016": [
+      {
+        "party": "AITC",
+        "seats": 211,
+        "vote_share_pct": 44.91
+      },
+      {
+        "party": "BJP",
+        "seats": 3,
+        "vote_share_pct": 10.16
+      },
+      {
+        "party": "INC",
+        "seats": 44,
+        "vote_share_pct": 12.25
+      },
+      {
+        "party": "CPI(M)",
+        "seats": 26,
+        "vote_share_pct": 19.75
+      },
+      {
+        "party": "OTH",
+        "seats": 10,
+        "vote_share_pct": 12.93
+      }
+    ],
+    "2021": [
+      {
+        "party": "AITC",
+        "seats": 213,
+        "vote_share_pct": 47.93
+      },
+      {
+        "party": "BJP",
+        "seats": 77,
+        "vote_share_pct": 38.1
+      },
+      {
+        "party": "AISF",
+        "seats": 1,
+        "vote_share_pct": 2.38
+      },
+      {
+        "party": "INC",
+        "seats": 0,
+        "vote_share_pct": 2.94
+      },
+      {
+        "party": "CPI(M)",
+        "seats": 0,
+        "vote_share_pct": 4.72
+      },
+      {
+        "party": "OTH",
+        "seats": 3,
+        "vote_share_pct": 3.93
+      }
+    ],
+    "2026": [
+      {
+        "party": "BJP",
+        "full_name": "Bharatiya Janata Party",
+        "seats": 202,
+        "vote_share_pct": 44.81,
+        "government": true
+      },
+      {
+        "party": "AITC",
+        "full_name": "All India Trinamool Congress",
+        "seats": 85,
+        "vote_share_pct": 41.89,
+        "government": false
+      },
+      {
+        "party": "AJUP",
+        "full_name": "Aam Janata Unnayan Party",
+        "seats": 2,
+        "vote_share_pct": 1.42,
+        "government": false,
+        "note": "Humayun Kabir's new party; won Naoda + Rejinagar"
+      },
+      {
+        "party": "INC",
+        "full_name": "Indian National Congress",
+        "seats": 2,
+        "vote_share_pct": 1.83,
+        "government": false
+      },
+      {
+        "party": "AISF",
+        "full_name": "All India Secular Front (ISF)",
+        "seats": 1,
+        "vote_share_pct": 1.19,
+        "government": false,
+        "note": "Naushad Siddiqui retained Bhangar"
+      },
+      {
+        "party": "CPI(M)",
+        "full_name": "Communist Party of India (Marxist)",
+        "seats": 1,
+        "vote_share_pct": 0.93,
+        "government": false
+      },
+      {
+        "party": "OTH",
+        "full_name": "Others / Independents",
+        "seats": 0,
+        "vote_share_pct": 7.93,
+        "government": false
+      }
+    ]
+  },
+  "candidate_stats_2026": {
+    "total_candidates": 2926,
+    "analysed_by_adr": 2920,
+    "women_candidates": 385,
+    "women_candidates_pct": 13.2,
+    "with_criminal_cases": 683,
+    "with_criminal_cases_pct": 23.3,
+    "with_serious_cases": 589,
+    "with_serious_cases_pct": 20.1,
+    "crorepatis": 629,
+    "crorepatis_pct": 21.5,
+    "avg_assets_cr": 1.27,
+    "graduates_or_above": 1419,
+    "graduates_or_above_pct": 48.5,
+    "red_alert_constituencies_count": 43,
+    "party_avg_assets_cr": {
+      "AITC": 5.39,
+      "BJP": 2.91,
+      "INC": 1.56,
+      "CPI(M)": 1.07,
+      "AIFB": 0.79,
+      "CPI": 0.78
+    }
+  },
+  "swings_2021_to_2026": [
+    {
+      "party": "BJP",
+      "seats_delta": 125,
+      "vote_share_delta": 6.71
+    },
+    {
+      "party": "AITC",
+      "seats_delta": -128,
+      "vote_share_delta": -6.04
+    },
+    {
+      "party": "AJUP",
+      "seats_delta": 2,
+      "vote_share_delta": null,
+      "_note": "New party in 2026; no 2021 baseline for vote_share_delta"
+    },
+    {
+      "party": "INC",
+      "seats_delta": 2,
+      "vote_share_delta": -1.11
+    },
+    {
+      "party": "AISF",
+      "seats_delta": 0,
+      "vote_share_delta": -1.19
+    },
+    {
+      "party": "CPI(M)",
+      "seats_delta": 1,
+      "vote_share_delta": -3.79
+    }
+  ],
+  "_district_note": "District seat totals follow official ECI delimitation (294 total). AC #144 Falta is pending; its seat is shown as 'Pending' in South 24 Parganas and excluded from all party counts. All breakdowns will be updated from Form-20 after final results.",
+  "district_results_2026": [
+    {
+      "district": "Kolkata",
+      "total_seats": 11,
+      "BJP": 8,
+      "AITC": 3
+    },
+    {
+      "district": "North 24 Parganas",
+      "total_seats": 33,
+      "BJP": 22,
+      "AITC": 11
+    },
+    {
+      "district": "South 24 Parganas",
+      "total_seats": 31,
+      "BJP": 18,
+      "AITC": 11,
+      "AISF": 1,
+      "_note": "AC #144 Falta result pending (repoll 21 May). 30 of 31 seats decided."
+    },
+    {
+      "district": "Howrah",
+      "total_seats": 16,
+      "BJP": 12,
+      "AITC": 4
+    },
+    {
+      "district": "Hooghly",
+      "total_seats": 18,
+      "BJP": 14,
+      "AITC": 4
+    },
+    {
+      "district": "Purba Medinipur",
+      "total_seats": 16,
+      "BJP": 13,
+      "AITC": 3
+    },
+    {
+      "district": "Paschim Medinipur",
+      "total_seats": 15,
+      "BJP": 11,
+      "AITC": 4
+    },
+    {
+      "district": "Bankura",
+      "total_seats": 12,
+      "BJP": 9,
+      "AITC": 3
+    },
+    {
+      "district": "Purulia",
+      "total_seats": 9,
+      "BJP": 7,
+      "AITC": 2
+    },
+    {
+      "district": "Paschim Bardhaman",
+      "total_seats": 9,
+      "BJP": 7,
+      "AITC": 2
+    },
+    {
+      "district": "Purba Bardhaman",
+      "total_seats": 16,
+      "BJP": 11,
+      "AITC": 5
+    },
+    {
+      "district": "Birbhum",
+      "total_seats": 11,
+      "BJP": 7,
+      "AITC": 4
+    },
+    {
+      "district": "Murshidabad",
+      "total_seats": 22,
+      "BJP": 8,
+      "AITC": 11,
+      "AJUP": 2,
+      "INC": 1
+    },
+    {
+      "district": "Nadia",
+      "total_seats": 17,
+      "BJP": 12,
+      "AITC": 5
+    },
+    {
+      "district": "Malda",
+      "total_seats": 12,
+      "BJP": 6,
+      "AITC": 5,
+      "INC": 1
+    },
+    {
+      "district": "Uttar Dinajpur",
+      "total_seats": 9,
+      "BJP": 5,
+      "AITC": 4
+    },
+    {
+      "district": "Dakshin Dinajpur",
+      "total_seats": 6,
+      "BJP": 4,
+      "AITC": 2
+    },
+    {
+      "district": "Cooch Behar",
+      "total_seats": 9,
+      "BJP": 7,
+      "AITC": 2
+    },
+    {
+      "district": "Alipurduar",
+      "total_seats": 6,
+      "BJP": 5,
+      "AITC": 1
+    },
+    {
+      "district": "Jalpaiguri",
+      "total_seats": 5,
+      "BJP": 4,
+      "AITC": 1
+    },
+    {
+      "district": "Darjeeling",
+      "total_seats": 5,
+      "BJP": 4,
+      "AITC": 1
+    },
+    {
+      "district": "Kalimpong",
+      "total_seats": 2,
+      "BJP": 2,
+      "AITC": 0
+    },
+    {
+      "district": "Jhargram",
+      "total_seats": 4,
+      "BJP": 3,
+      "AITC": 1
+    }
+  ]
+}

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CSP: 'unsafe-inline' is required for style-src because the JS charts and
+       ticker inject many style="..." attributes that cannot practically be moved
+       to CSS classes without a full architecture change. All other directives
+       remain strict. XSS is mitigated via the esc() helper on every innerHTML
+       interpolation rather than relying on CSP to block inline styles. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self';" />
+  <meta name="description" content="West Bengal Legislative Assembly Election 2026 — interactive results dashboard. All 294 constituencies, party standings, candidate profiles, historical comparisons 2011–2026." />
+  <meta name="author" content="WB Election Intelligence" />
+  <meta property="og:title" content="West Bengal Election 2026 — Results Dashboard" />
+  <meta property="og:description" content="BJP wins 202 seats. AITC holds 85. Interactive constituency map, charts, and candidate data." />
+  <meta property="og:type" content="website" />
+  <title>WB Election 2026 — Results Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%97%B3%3C%2Ftext%3E%3C%2Fsvg%3E" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     MASTHEAD
+════════════════════════════════════════ -->
+<div id="masthead" role="banner">
+  <div class="masthead-inner">
+    <span class="masthead-brand">WB Election Intelligence · Data-driven · Open Access</span>
+    <span class="masthead-date">Counting Day: 4 May 2026 &nbsp;·&nbsp; Updated: May 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="hero-eyebrow">West Bengal Legislative Assembly Election 2026</div>
+    <h1 class="hero-title" id="hero-heading">
+      BJP sweeps Bengal<br /><em>with 202 seats</em>
+    </h1>
+    <p class="hero-deck">
+      A historic mandate: BJP wins a two-thirds majority, flipping 125 seats from 2021.
+      Mamata Banerjee retains Bhabanipur by 7,451 votes. TMC falls to 85 seats.
+      Turnout hits 92.93% — the highest in West Bengal's electoral history.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <span class="hero-stat-value">294</span>
+        <span class="hero-stat-label">Total Seats</span>
+      </div>
+      <div class="hero-stat">
+        <!-- H2: updated by JS from metadata.total_seats; static 148 is the fallback -->
+        <span class="hero-stat-value" id="hero-majority-val">148</span>
+        <span class="hero-stat-label">Majority Mark</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">92.93%</span>
+        <span class="hero-stat-label">Statewide Turnout</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">2,926</span>
+        <span class="hero-stat-label">Candidates</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">6.8 Cr+</span>
+        <span class="hero-stat-label">Voters</span>
+      </div>
+    </div>
+    <div class="falta-banner" role="alert" id="falta-banner">
+      <strong>⏳ Falta (AC #144) pending:</strong>
+      <span id="falta-banner-text">Repoll on 21 May 2026 due to EVM tampering allegations. Result on 24 May. All totals exclude this seat.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SCORE TICKER (sticky)
+════════════════════════════════════════ -->
+<div id="ticker" role="complementary" aria-label="Party seat standings">
+  <div class="ticker-inner">
+    <div class="ticker-label">FINAL STANDINGS</div>
+    <div id="ticker-cards" class="ticker-cards-row" data-static-placeholder="true">
+      <!-- Static placeholder — JS clears and replaces this with live data from
+           party_results.json. The placeholder prevents a blank ticker if JS
+           loads before the fetch completes, but is cleared immediately at
+           renderScoreTicker() so stale values never persist after load. -->
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#FF6B00"></div>
+        <div><div class="ticker-party-name">BJP</div><div class="ticker-vs">44.81% votes</div></div>
+        <div class="ticker-seats" style="color:#FF6B00">202</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#00843D"></div>
+        <div><div class="ticker-party-name">AITC</div><div class="ticker-vs">41.89% votes</div></div>
+        <div class="ticker-seats" style="color:#00843D">85</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#8B4513"></div>
+        <div><div class="ticker-party-name">AJUP</div><div class="ticker-vs">1.42% votes</div></div>
+        <div class="ticker-seats" style="color:#8B4513">2</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#19AAED"></div>
+        <div><div class="ticker-party-name">INC</div><div class="ticker-vs">1.83% votes</div></div>
+        <div class="ticker-seats" style="color:#19AAED">2</div>
+      </div>
+      <!-- V2 (R9): AISF colour updated from #138808 → #7B3FA0 (purple) to match
+           the new PARTY_COLORS.AISF in main.js. JS replaces this on load. -->
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#7B3FA0"></div>
+        <div><div class="ticker-party-name">AISF</div><div class="ticker-vs">1.19% votes</div></div>
+        <div class="ticker-seats" style="color:#7B3FA0">1</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#CC0000"></div>
+        <div><div class="ticker-party-name">CPI(M)</div><div class="ticker-vs">0.93% votes</div></div>
+        <div class="ticker-seats" style="color:#CC0000">1</div>
+      </div>
+    </div>
+    <div class="ticker-majority">
+      <div class="majority-line">
+        <div class="majority-label">Majority</div>
+        <!-- H2: updated by JS from metadata.total_seats; static 148 is the fallback -->
+        <div class="majority-num" id="ticker-majority-val">148</div>
+      </div>
+      <!-- M5 (R5): declared count — updated by JS; static fallback "293/294" shown until load -->
+      <div class="majority-declared" id="ticker-declared">293 / 294 declared</div>
+    </div>
+  </div>
+</div>
+
+<!-- error banner (hidden unless data load fails) -->
+<div id="global-error" role="alert" style="display:none;background:#FDEAEA;color:#CC0000;text-align:center;padding:12px;font-family:var(--font-mono);font-size:0.85rem;border-bottom:1px solid #CC0000"></div>
+
+<!-- ═══════════════════════════════════════
+     CHARTS
+════════════════════════════════════════ -->
+<section id="charts" aria-labelledby="charts-heading">
+  <div class="container">
+    <div class="section-label">Visualisations</div>
+    <h2 class="section-title" id="charts-heading">Results at a Glance</h2>
+    <p class="section-sub">Seat distribution, vote share, and 15-year trend — 2011 to 2026</p>
+
+    <div class="charts-grid">
+
+      <!-- Seat Bar Chart -->
+      <div class="chart-card">
+        <div class="chart-card-title">Seats Won — 2026 vs 2021</div>
+        <div class="chart-card-sub">Solid = 2026 &nbsp;·&nbsp; Faded = 2021 &nbsp;·&nbsp; Gold line = majority (148)</div>
+        <div class="chart-svg-wrap">
+          <svg id="seat-bar-svg" role="img" aria-label="Seat bar chart comparing 2026 and 2021 results by party"></svg>
+        </div>
+      </div>
+
+      <!-- Vote Share Donut -->
+      <div class="chart-card">
+        <div class="chart-card-title">Vote Share 2026</div>
+        <div class="chart-card-sub">Percentage of total votes polled</div>
+        <div class="chart-svg-wrap" style="max-width:200px;margin:0 auto">
+          <svg id="donut-svg" role="img" aria-label="Vote share donut chart for 2026"></svg>
+        </div>
+        <div id="donut-legend" class="trend-legend" style="margin-top:16px"></div>
+      </div>
+
+      <!-- Trend Line Chart -->
+      <div class="chart-card">
+        <div class="chart-card-title">Seats — 15-Year Trend</div>
+        <div class="chart-card-sub">Major parties, 2011 → 2016 → 2021 → 2026</div>
+        <div class="chart-svg-wrap">
+          <svg id="trend-svg" role="img" aria-label="Trend line chart of seats won 2011 to 2026"></svg>
+        </div>
+        <div id="trend-legend" class="trend-legend"></div>
+      </div>
+
+    </div><!-- /charts-grid -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONSTITUENCY TABLE
+════════════════════════════════════════ -->
+<section id="constituency-table" aria-labelledby="table-heading">
+  <div class="container">
+    <div class="section-label">Constituency Results</div>
+    <h2 class="section-title" id="table-heading">Browse All Results</h2>
+    <!-- Gap-4 (R10): "notable" count is now JS-driven via renderNotableContests();
+         the static fallback omits the hard number so it is never wrong if JS fails. -->
+    <p class="section-sub" id="table-section-sub">Key seats highlighted · Click any constituency name for full details · Full 294-seat data via Phase 2 expansion</p>
+
+    <div class="table-controls">
+      <input
+        type="search"
+        id="search-input"
+        class="search-box"
+        placeholder="Search constituency, candidate, district…"
+        aria-label="Search constituencies"
+      />
+      <select id="filter-party" class="filter-select" aria-label="Filter by party">
+        <option value="">All Parties</option>
+      </select>
+      <select id="filter-phase" class="filter-select" aria-label="Filter by phase">
+        <option value="">All Phases</option>
+        <!-- Phase options populated by JS from party_results.json metadata (H1) -->
+      </select>
+      <select id="filter-district" class="filter-select" aria-label="Filter by district">
+        <option value="">All Districts</option>
+      </select>
+    </div>
+
+    <!-- Completeness (R5): data-quality notice — JS updates this from actual loaded count.
+         S1 (R8): static text updated to match the JS-rendered wording in renderDataQualityNotice()
+         so the pre-JS fallback and the JS-rendered text are consistent.
+         V3 (R9): removed hardcoded "All 23 district totals are complete." from the static
+         fallback — JS derives the district count from pr.district_results_2026.length and is
+         always authoritative. Keeping it here would drift if district data changes. -->
+    <div id="data-quality-notice" class="data-quality-notice" role="status">
+      Showing 26 of 294 constituencies — full dataset in progress.
+    </div>
+
+    <div class="table-wrap" role="region" aria-label="Constituency results table" tabindex="0">
+      <table>
+        <thead id="table-head">
+          <tr>
+            <th data-col="ac_no"         title="Assembly Constituency number">AC #</th>
+            <th data-col="ac_name"       title="Constituency name">Constituency</th>
+            <th data-col="district"      title="District">District</th>
+            <th data-col="winner"        title="Winning candidate">Winner</th>
+            <th data-col="winner_party"  title="Winning party">Party</th>
+            <th data-col="margin"        title="Margin of victory">Margin</th>
+            <th data-col="turnout"       title="Voter turnout %">Turnout</th>
+            <th data-col="swing"         title="Swing vs 2021">Swing</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr class="loading-row"><td colspan="8">Loading constituency data…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="table-count" class="table-count"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CANDIDATE STATS
+════════════════════════════════════════ -->
+<section id="candidate-stats" aria-labelledby="stats-heading">
+  <div class="container">
+    <div class="section-label">ADR / MyNeta Analysis · All 2926 Candidates</div>
+    <h2 class="section-title" id="stats-heading">Who Stood for Election?</h2>
+    <p class="section-sub">Aggregate statistics from candidate affidavits filed with the Election Commission of India</p>
+
+    <div id="stats-grid" class="stats-grid">
+      <!-- Rendered by JS: renderCandidateStats() -->
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="section-label" style="margin-bottom:12px">Average Declared Assets by Party (Candidates)</div>
+      <div id="party-assets" class="party-assets-grid"></div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="section-label" style="margin-bottom:12px">Seat Swing: 2021 → 2026</div>
+      <div id="swing-summary" class="party-assets-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     DISTRICT GRID
+════════════════════════════════════════ -->
+<section id="district-grid" aria-labelledby="district-heading">
+  <div class="container">
+    <div class="section-label">All 23 Districts</div>
+    <h2 class="section-title" id="district-heading">District-wise Breakdown</h2>
+    <p class="section-sub">Seat tallies by party across West Bengal's 23 districts</p>
+    <div id="district-cards" class="district-cards">
+      <!-- Rendered by JS: renderDistrictGrid() -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     NOTABLE CONTESTS
+════════════════════════════════════════ -->
+<section id="notable-contests" aria-labelledby="notable-heading">
+  <div class="container">
+    <div class="section-label">Key Battlegrounds</div>
+    <h2 class="section-title" id="notable-heading">Notable Contests</h2>
+    <p class="section-sub">High-profile seats that defined the narrative of the 2026 election</p>
+    <div id="contest-cards" class="contests-grid">
+      <!-- Rendered by JS: renderNotableContests() -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     MODAL (Constituency Detail)
+════════════════════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-subtitle">
+  <div class="modal" tabindex="-1">
+    <div class="modal-header">
+      <div>
+        <h3 class="modal-title" id="modal-title">Constituency</h3>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Close detail panel">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- Populated by JS: showModal(ac_no) -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SOURCES
+════════════════════════════════════════ -->
+<section id="sources" aria-labelledby="sources-heading">
+  <div class="container">
+    <div class="section-label">Data Attribution</div>
+    <h2 class="section-title" id="sources-heading">Sources</h2>
+    <ul class="sources-list">
+      <li>
+        <a href="https://results.eci.gov.in/" target="_blank" rel="noopener noreferrer">
+          🗳 ECI Results Portal — Official vote counts
+        </a>
+      </li>
+      <li>
+        <a href="https://www.myneta.info/" target="_blank" rel="noopener noreferrer">
+          📋 MyNeta / ADR — Candidate affidavits &amp; criminal records
+        </a>
+      </li>
+      <li>
+        <a href="https://lokdhaba.ashoka.edu.in/" target="_blank" rel="noopener noreferrer">
+          📊 Lok Dhaba (TCPD, Ashoka University) — Historical 2011–2021 data
+        </a>
+      </li>
+      <li>
+        <a href="https://ceowestbengal.nic.in/" target="_blank" rel="noopener noreferrer">
+          🏛 WB Chief Electoral Officer — Turnout &amp; booth data
+        </a>
+      </li>
+      <li>
+        <a href="https://affidavitarchive.nic.in/" target="_blank" rel="noopener noreferrer">
+          📄 ECI Affidavit Archive — Nomination affidavit PDFs
+        </a>
+      </li>
+    </ul>
+    <p style="margin-top:20px;font-size:0.82rem;color:var(--ink-faint)">
+      <strong>Data disclaimer:</strong> Constituency vote counts shown are from ECI live results on counting day (4 May 2026).
+      Final figures come from Form-20 publication. AC #144 (Falta) excluded — repoll 21 May, result 24 May 2026.
+      No data is interpolated or inferred. All figures sourced directly from ECI or ADR affidavits.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div>
+      <strong style="color:rgba(253,250,244,0.85)">WB Election 2026 Dashboard</strong>
+      &nbsp;·&nbsp; Zero-dependency static site
+      &nbsp;·&nbsp; GitHub Pages deployment
+    </div>
+    <div>
+      Data: ECI · ADR/MyNeta · Lok Dhaba/TCPD · WB CEO
+      &nbsp;·&nbsp;
+      Design inspired by
+      <a href="https://data-analytics.github.io/Election_Data_2021/West_Bengal.html" target="_blank" rel="noopener noreferrer">
+        data-analytics.github.io
+      </a>
+    </div>
+    <div style="margin-top:6px;opacity:0.45">
+      Built as a public-interest open-access resource. No political affiliation.
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
