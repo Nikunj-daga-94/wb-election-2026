@@ -35,13 +35,14 @@ wb-election-2026/
 ├── css/style.css                 ← Newsprint editorial design system
 ├── js/main.js                    ← All interactivity (vanilla JS, no deps)
 ├── data/
-│   ├── constituencies_2026.json  ← 26 key seats (→ 294 via Phase 2 expansion)
+│   ├── constituencies_2026.json  ← 294 constituencies (ECI Form-20 data)
 │   └── party_results.json        ← Party tallies 2011–2026, ADR stats, districts
-├── AGENTS.md                     ← AI agent guide: architecture, invariants, fix history
+├── AGENTS.md                     ← AI agent guide: verify commands, key patterns
+├── CHANGELOG.md                  ← Full fix history, extracted from main.js
 └── README.md
 ```
 
-> **For AI agents and contributors:** Read [`AGENTS.md`](AGENTS.md) before touching any file. It documents every architectural invariant, the complete null-handling rules, the HTML element ID contract, all 11 rounds of adversarial review history, and the exact patterns that must be followed. Skipping it will reintroduce bugs that took multiple review rounds to find.
+> **For AI agents and contributors:** Read [`AGENTS.md`](AGENTS.md) for verification commands and key patterns, and [`CHANGELOG.md`](CHANGELOG.md) for the full fix history across 20 rounds of adversarial review. Skipping these will reintroduce bugs that took multiple review rounds to find.
 
 ---
 
@@ -85,38 +86,27 @@ interface Constituency {
   runner_up_party: string | null;
   runner_up_votes: number | null;
   margin: number | null;
-  turnout: number | null;           // percentage
   total_candidates: number | null;
   nota_votes: number | null;
-  total_votes: number | null;       // winner + runner_up + nota ONLY
-                                    // NOT a full total when total_candidates > 2
+  total_votes: number | null;       // full ECI total (all candidates)
 
-  // Candidate profile
-  winner_gender: "M"|"F" | null;
-  winner_age: number | null;
-  winner_education: string | null;
-  winner_profession: string | null;
-  winner_assets: string | null;     // "X.X Cr" (may have leading ₹ — strip before display)
-  winner_liabilities: string | null;
-  winner_criminal_cases: number | null;
-  winner_serious_cases: number | null;
-
-  // Historical comparison
-  "2021_winner": string | null;
-  "2021_winner_party": string | null;
-  "2021_winner_votes": number | null;
-  "2021_margin": number | null;
-
-  // Derived / editorial
-  swing: string | null;             // "PARTY ±N" — sort by numeric magnitude, not string
+  // Flags / editorial
   is_repoll: boolean;               // true only for AC #144 Falta
   is_notable: boolean;              // curated for the Notable Contests section
-  notable_order: number;            // 1-based display order; absent → sorts last
+  notable_order?: number;           // 1-based display order; absent → sorts last
   result_final: boolean;
+  note?: string;                    // editorial note (repoll reason, contest significance)
 }
 ```
 
-> See [`AGENTS.md §3`](AGENTS.md#3-data-schema) for the full `party_results.json` schema and important field-level caveats (e.g. `vote_share_delta: null` for new parties, `total_votes` partial-total semantics).
+> **Schema 2.0 note:** The following fields from earlier schemas are **not present** in
+> the current ECI-sourced data and are conditionally rendered by the JS only when non-null:
+> `turnout`, `winner_gender`, `winner_age`, `winner_education`, `winner_profession`,
+> `winner_assets`, `winner_liabilities`, `winner_criminal_cases`, `winner_serious_cases`,
+> `2021_winner`, `2021_winner_party`, `2021_winner_votes`, `2021_margin`, `swing`.
+> They will reappear when ADR/MyNeta and Lok Dhaba data is integrated (Phase 3).
+
+> See [`CHANGELOG.md`](CHANGELOG.md) for the full fix history and important field-level caveats (e.g. `vote_share_delta: null` for new parties, `total_votes` partial-total semantics).
 
 ---
 
@@ -125,7 +115,7 @@ interface Constituency {
 | Phase | Status | Description |
 |-------|--------|-------------|
 | 1 — Core | ✅ Done | 26 key seats, party standings, ADR stats, district grid |
-| 2 — Full Dataset | 🔄 Next | All 294 constituencies from ECI Form-20 |
+| 2 — Full Dataset | ✅ Done | All 294 constituencies from ECI Form-20 |
 | 3 — Analytics | 📋 Planned | Per-candidate vote share, NOTA, postal ballots, Lok Dhaba history |
 | 4 — Visual | 📋 Planned | SVG choropleth map, round-wise animation, Bengali i18n |
 

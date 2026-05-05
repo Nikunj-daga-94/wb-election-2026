@@ -12,7 +12,7 @@
   <meta name="description" content="West Bengal Legislative Assembly Election 2026 — interactive results dashboard. All 294 constituencies, party standings, candidate profiles, historical comparisons 2011–2026." />
   <meta name="author" content="WB Election Intelligence" />
   <meta property="og:title" content="West Bengal Election 2026 — Results Dashboard" />
-  <meta property="og:description" content="BJP wins 202 seats. AITC holds 85. Interactive constituency map, charts, and candidate data." />
+  <meta property="og:description" content="BJP wins 206 seats. AITC holds 81. Interactive constituency map, charts, and candidate data." />
   <meta property="og:type" content="website" />
   <title>WB Election 2026 — Results Dashboard</title>
   <link rel="stylesheet" href="css/style.css" />
@@ -37,12 +37,12 @@
   <div class="container">
     <div class="hero-eyebrow">West Bengal Legislative Assembly Election 2026</div>
     <h1 class="hero-title" id="hero-heading">
-      BJP sweeps Bengal<br /><em>with 202 seats</em>
+      BJP sweeps Bengal<br /><em>with 206 seats</em>
     </h1>
     <p class="hero-deck">
-      A historic mandate: BJP wins a two-thirds majority, flipping 125 seats from 2021.
-      Mamata Banerjee retains Bhabanipur by 7,451 votes. TMC falls to 85 seats.
-      Turnout hits 92.93% — the highest in West Bengal's electoral history.
+      A historic mandate: BJP wins a two-thirds majority, gaining 129 seats over 2021.
+      Mamata Banerjee loses Bhabanipur to Suvendu Adhikari by 15,105 votes. TMC falls to 81 seats.
+      Turnout hits 92.93% &mdash; the highest in West Bengal's electoral history.
     </p>
     <div class="hero-meta">
       <div class="hero-stat">
@@ -50,12 +50,12 @@
         <span class="hero-stat-label">Total Seats</span>
       </div>
       <div class="hero-stat">
-        <!-- H2: updated by JS from metadata.total_seats; static 148 is the fallback -->
+        <!-- Updated by JS from metadata.total_seats; static 148 is the fallback -->
         <span class="hero-stat-value" id="hero-majority-val">148</span>
         <span class="hero-stat-label">Majority Mark</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-value">92.93%</span>
+        <span class="hero-stat-value" id="hero-turnout-val">92.93%</span>
         <span class="hero-stat-label">Statewide Turnout</span>
       </div>
       <div class="hero-stat">
@@ -80,51 +80,55 @@
 <div id="ticker" role="complementary" aria-label="Party seat standings">
   <div class="ticker-inner">
     <div class="ticker-label">FINAL STANDINGS</div>
-    <div id="ticker-cards" class="ticker-cards-row" data-static-placeholder="true">
+    <div id="ticker-cards" class="ticker-cards-row">
       <!-- Static placeholder — JS clears and replaces this with live data from
            party_results.json. The placeholder prevents a blank ticker if JS
            loads before the fetch completes, but is cleared immediately at
            renderScoreTicker() so stale values never persist after load. -->
       <div class="ticker-card">
         <div class="ticker-party-swatch" style="background:#FF6B00"></div>
-        <div><div class="ticker-party-name">BJP</div><div class="ticker-vs">44.81% votes</div></div>
-        <div class="ticker-seats" style="color:#FF6B00">202</div>
+        <div><div class="ticker-party-name">BJP</div><div class="ticker-vs">45.84% votes</div></div>
+        <div class="ticker-seats" style="color:#FF6B00">206</div>
       </div>
       <div class="ticker-card">
         <div class="ticker-party-swatch" style="background:#00843D"></div>
-        <div><div class="ticker-party-name">AITC</div><div class="ticker-vs">41.89% votes</div></div>
-        <div class="ticker-seats" style="color:#00843D">85</div>
-      </div>
-      <div class="ticker-card">
-        <div class="ticker-party-swatch" style="background:#8B4513"></div>
-        <div><div class="ticker-party-name">AJUP</div><div class="ticker-vs">1.42% votes</div></div>
-        <div class="ticker-seats" style="color:#8B4513">2</div>
+        <div><div class="ticker-party-name">AITC</div><div class="ticker-vs">40.8% votes</div></div>
+        <div class="ticker-seats" style="color:#00843D">81</div>
       </div>
       <div class="ticker-card">
         <div class="ticker-party-swatch" style="background:#19AAED"></div>
-        <div><div class="ticker-party-name">INC</div><div class="ticker-vs">1.83% votes</div></div>
+        <div><div class="ticker-party-name">INC</div><div class="ticker-vs">2.97% votes</div></div>
         <div class="ticker-seats" style="color:#19AAED">2</div>
       </div>
-      <!-- V2 (R9): AISF colour updated from #138808 → #7B3FA0 (purple) to match
-           the new PARTY_COLORS.AISF in main.js. JS replaces this on load. -->
       <div class="ticker-card">
-        <div class="ticker-party-swatch" style="background:#7B3FA0"></div>
-        <div><div class="ticker-party-name">AISF</div><div class="ticker-vs">1.19% votes</div></div>
-        <div class="ticker-seats" style="color:#7B3FA0">1</div>
+        <div class="ticker-party-swatch" style="background:#8B4513"></div>
+        <div><div class="ticker-party-name">AJUP</div><div class="ticker-vs">0.74% votes</div></div>
+        <div class="ticker-seats" style="color:#8B4513">2</div>
       </div>
       <div class="ticker-card">
         <div class="ticker-party-swatch" style="background:#CC0000"></div>
-        <div><div class="ticker-party-name">CPI(M)</div><div class="ticker-vs">0.93% votes</div></div>
+        <div><div class="ticker-party-name">CPI(M)</div><div class="ticker-vs">4.45% votes</div></div>
         <div class="ticker-seats" style="color:#CC0000">1</div>
+      </div>
+      <!-- AISF — JS replaces this on load -->
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#7B3FA0"></div>
+        <div><div class="ticker-party-name">AISF</div><div class="ticker-vs">1.53% votes</div></div>
+        <div class="ticker-seats" style="color:#7B3FA0">1</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-party-swatch" style="background:#888888"></div>
+        <div><div class="ticker-party-name">OTH</div><div class="ticker-vs">3.67% votes</div></div>
+        <div class="ticker-seats" style="color:#888888">0</div>
       </div>
     </div>
     <div class="ticker-majority">
       <div class="majority-line">
         <div class="majority-label">Majority</div>
-        <!-- H2: updated by JS from metadata.total_seats; static 148 is the fallback -->
+        <!-- Updated by JS from metadata.total_seats; static 148 is the fallback -->
         <div class="majority-num" id="ticker-majority-val">148</div>
       </div>
-      <!-- M5 (R5): declared count — updated by JS; static fallback "293/294" shown until load -->
+      <!-- Declared count — updated by JS; static fallback shown until load -->
       <div class="majority-declared" id="ticker-declared">293 / 294 declared</div>
     </div>
   </div>
@@ -184,9 +188,7 @@
   <div class="container">
     <div class="section-label">Constituency Results</div>
     <h2 class="section-title" id="table-heading">Browse All Results</h2>
-    <!-- Gap-4 (R10): "notable" count is now JS-driven via renderNotableContests();
-         the static fallback omits the hard number so it is never wrong if JS fails. -->
-    <p class="section-sub" id="table-section-sub">Key seats highlighted · Click any constituency name for full details · Full 294-seat data via Phase 2 expansion</p>
+    <p class="section-sub">Key seats highlighted · Click any constituency name for full details</p>
 
     <div class="table-controls">
       <input
@@ -201,21 +203,16 @@
       </select>
       <select id="filter-phase" class="filter-select" aria-label="Filter by phase">
         <option value="">All Phases</option>
-        <!-- Phase options populated by JS from party_results.json metadata (H1) -->
+        <!-- Phase options populated by JS from party_results.json metadata -->
       </select>
       <select id="filter-district" class="filter-select" aria-label="Filter by district">
         <option value="">All Districts</option>
       </select>
     </div>
 
-    <!-- Completeness (R5): data-quality notice — JS updates this from actual loaded count.
-         S1 (R8): static text updated to match the JS-rendered wording in renderDataQualityNotice()
-         so the pre-JS fallback and the JS-rendered text are consistent.
-         V3 (R9): removed hardcoded "All 23 district totals are complete." from the static
-         fallback — JS derives the district count from pr.district_results_2026.length and is
-         always authoritative. Keeping it here would drift if district data changes. -->
+    <!-- Data-quality notice — JS updates from actual loaded count; static fallback below -->
     <div id="data-quality-notice" class="data-quality-notice" role="status">
-      Showing 26 of 294 constituencies — full dataset in progress.
+      All 294 constituencies loaded (excludes 1 repoll seat pending). All 23 district totals are complete.
     </div>
 
     <div class="table-wrap" role="region" aria-label="Constituency results table" tabindex="0">
@@ -228,12 +225,10 @@
             <th data-col="winner"        title="Winning candidate">Winner</th>
             <th data-col="winner_party"  title="Winning party">Party</th>
             <th data-col="margin"        title="Margin of victory">Margin</th>
-            <th data-col="turnout"       title="Voter turnout %">Turnout</th>
-            <th data-col="swing"         title="Swing vs 2021">Swing</th>
           </tr>
         </thead>
         <tbody id="table-body">
-          <tr class="loading-row"><td colspan="8">Loading constituency data…</td></tr>
+          <tr class="loading-row"><td colspan="6">Loading constituency data…</td></tr>
         </tbody>
       </table>
     </div>
@@ -246,7 +241,7 @@
 ════════════════════════════════════════ -->
 <section id="candidate-stats" aria-labelledby="stats-heading">
   <div class="container">
-    <div class="section-label">ADR / MyNeta Analysis · All 2926 Candidates</div>
+    <div class="section-label">ADR / MyNeta Analysis &middot; All 2,926 Candidates</div>
     <h2 class="section-title" id="stats-heading">Who Stood for Election?</h2>
     <p class="section-sub">Aggregate statistics from candidate affidavits filed with the Election Commission of India</p>
 
@@ -287,7 +282,7 @@
   <div class="container">
     <div class="section-label">Key Battlegrounds</div>
     <h2 class="section-title" id="notable-heading">Notable Contests</h2>
-    <p class="section-sub">High-profile seats that defined the narrative of the 2026 election</p>
+    <p class="section-sub" id="notable-section-sub">High-profile seats that defined the narrative of the 2026 election</p>
     <div id="contest-cards" class="contests-grid">
       <!-- Rendered by JS: renderNotableContests() -->
     </div>
